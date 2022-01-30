@@ -3,7 +3,7 @@ import fs from 'fs'
 
 const sourceFileNode = ts.createSourceFile(
   'x.ts',   // fileName
-  fs.readFileSync('./src/sample2.spec.tsx', 'utf8'), // sourceText
+  fs.readFileSync('./src/sample3.js', 'utf8'), // sourceText
   ts.ScriptTarget.Latest // langugeVersion
 )
 
@@ -22,7 +22,7 @@ function processExpression(callExpression: CallExpression, depth: number) {
     const identifier = callExpression.expression as Identifier
 
     const identifierName = identifier?.escapedText
-    if (identifierName === 'describe' || identifierName === 'it') {
+    if (identifierName === 'describe' || identifierName === 'context' || identifierName === 'it') {
         callExpression.arguments.forEach(arg => {
             if(arg.kind === SyntaxKind.StringLiteral) {
                 console.log(`${indent(depth)}${identifierName} ${(arg as StringLiteral).text}`)
